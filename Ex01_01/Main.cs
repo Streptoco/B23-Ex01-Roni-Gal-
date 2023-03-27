@@ -10,6 +10,8 @@ public class Program
     // TODO: 1. check for kelet lo huki 2. 
     public static void Main()
     {
+        short numberOfOnesInString = 0;
+        short numberOfZerosInString = 0;
         Console.WriteLine("Please enter 3 binary numbers, each containing 8 digits.");
         for(int i = 0; i < 3; i++)
         {
@@ -20,6 +22,8 @@ public class Program
                 readNumberFromUser = Console.ReadLine();
             }
             short numberConvertedToDecimalFromBinary = ConvertToDecimal(readNumberFromUser);
+            numberOfOnesInString = (CountNumberOfOnesInString(readNumberFromUser));
+            numberOfZerosInString = (short)((8 - numberOfOnesInString));
             Console.WriteLine(numberConvertedToDecimalFromBinary);
         }
     }
@@ -39,15 +43,15 @@ public class Program
     public static short ConvertToDecimal(string readNumberFromUser)
     {
         short convertedNumber = 0;
-        for(int i = 0;  i <= 7; i++)
+        for (int i = 0; i <= 7; i++)
         {
             short power = (short)(readNumberFromUser[i] - '0');
-            if(power != 0)
+            if (power != 0)
             {
                 convertedNumber += (short)Math.Pow(2, power * (7 - i));
             }
             Console.WriteLine(convertedNumber);
         }
         return convertedNumber;
-    } // 11100110 => 230
+    }
 }
