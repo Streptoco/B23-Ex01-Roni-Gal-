@@ -5,7 +5,7 @@ public class Program
     public static void Main()
     {
         int heightInputFromUser;
-        Console.WriteLine("Please enter the desired height of the diamond.\n");
+        Console.WriteLine("Please enter the desired height of the diamond.");
         int.TryParse(Console.ReadLine(), out heightInputFromUser);
         if(heightInputFromUser == 0)
         {
