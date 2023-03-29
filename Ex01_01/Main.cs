@@ -1,9 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+using System.Net.NetworkInformation;
 
 public class Program
 {
@@ -22,7 +18,7 @@ public class Program
                 readNumberFromUser = Console.ReadLine();
             }
             short numberConvertedToDecimalFromBinary = ConvertToDecimal(readNumberFromUser);
-            numberOfOnesInString = (CountNumberOfOnesInString(readNumberFromUser));
+            numberOfOnesInString = CountNumberOfOnesInString(readNumberFromUser);
             numberOfZerosInString = (short)((8 - numberOfOnesInString));
             Console.WriteLine(numberConvertedToDecimalFromBinary);
         }
@@ -40,12 +36,12 @@ public class Program
         return true;
     }
 
-    public static short ConvertToDecimal(string readNumberFromUser)
+    public static short ConvertToDecimal(string binaryString)
     {
         short convertedNumber = 0;
         for (int i = 0; i <= 7; i++)
         {
-            short power = (short)(readNumberFromUser[i] - '0');
+            short power = (short)(binaryString[i] - '0');
             if (power != 0)
             {
                 convertedNumber += (short)Math.Pow(2, power * (7 - i));
@@ -53,5 +49,46 @@ public class Program
             Console.WriteLine(convertedNumber);
         }
         return convertedNumber;
+    }
+
+    public static short CountNumberOfOnesInString(string number)
+    {
+        short count = 0;
+        for (int i=0; i<number.Length; i++)
+        {
+            if (number[i] == '1')
+                count++;
+        }
+
+        return count; 
+    }
+
+    public static bool IsPalindrome(int number)
+    {
+        int numberReversed = 0, numberCopy = number, digit;
+        
+        while (number != 0)
+        {
+            digit = number % 10;
+            numberReversed = (numberReversed * 10) + digit;
+            number = number / 10;
+        }
+
+        return (numberCopy == numberReversed);
+    }
+
+    public static bool AreDigitsDescendingSeries(int number)
+    {
+        while (number / 10 != 0)
+        {
+            if (number % 10 >= (number / 10) % 10)
+            {
+                return false;
+            }
+
+            number = number / 10;
+        }
+
+        return true;
     }
 }
