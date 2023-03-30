@@ -3,25 +3,50 @@ using System.Net.NetworkInformation;
 
 public class Program
 {
+    public const int NUMBER_OF_ITERATIONS = 3;
+    public const int DIVIDING_FACTOR = 24;
+    public const int BYTE_SIZE = 8;
     // TODO: 1. check for kelet lo huki 2. 
     public static void Main()
     {
-        short numberOfOnesInString = 0;
-        short numberOfZerosInString = 0;
+        float numberOfOnesInCurrentString = 0;
+        float numberOfOnesInAllStrings = 0;
+        float numberOfZerosInCurrentString = 0;
+        float numberOfZerosInAllStrings = 0;
+        int numberOfNumbersDividedByFour = 0;
+        int countNumberOfPalindromes = 0;
+        int countNumberOfDescendingNumbers = 0;
         Console.WriteLine("Please enter 3 binary numbers, each containing 8 digits.");
-        for(int i = 0; i < 3; i++)
+        for(int i = 0; i < NUMBER_OF_ITERATIONS; i++)
         {
             string readNumberFromUser = Console.ReadLine();
-            while (readNumberFromUser.Length != 8  && !isValid(readNumberFromUser))
+            while (readNumberFromUser.Length != BYTE_SIZE  && !isValid(readNumberFromUser))
             {
                 Console.WriteLine("Please enter a VALID number!");
                 readNumberFromUser = Console.ReadLine();
             }
             short numberConvertedToDecimalFromBinary = ConvertToDecimal(readNumberFromUser);
-            numberOfOnesInString = CountNumberOfOnesInString(readNumberFromUser);
-            numberOfZerosInString = (short)((8 - numberOfOnesInString));
-            Console.WriteLine(numberConvertedToDecimalFromBinary);
+            numberOfOnesInCurrentString = CountNumberOfOnesInString(readNumberFromUser);
+            numberOfOnesInAllStrings += numberOfOnesInCurrentString;
+            numberOfZerosInCurrentString = (float)(BYTE_SIZE - numberOfOnesInCurrentString);
+            numberOfZerosInAllStrings += numberOfZerosInCurrentString;
+            if(numberConvertedToDecimalFromBinary % 4 == 0)
+            {
+                numberOfNumbersDividedByFour++;
+            }
+            if(IsPalindrome(numberConvertedToDecimalFromBinary))
+            {
+                countNumberOfPalindromes++;
+            }
+            if(AreDigitsDescendingSeries(numberConvertedToDecimalFromBinary))
+            {
+                countNumberOfDescendingNumbers++;
+            }
         }
+        Console.WriteLine($"The average number of zeros: {numberOfZerosInAllStrings / NUMBER_OF_ITERATIONS}\nThe average number of ones: {numberOfOnesInAllStrings / NUMBER_OF_ITERATIONS}");
+        Console.WriteLine($"The number of numbers divided by 4 is {numberOfNumbersDividedByFour}");
+        Console.WriteLine($"The number of palindromes is {countNumberOfPalindromes}");
+        Console.WriteLine($"The number of descending serieses in numbers is {countNumberOfDescendingNumbers}");
     }
 
     public static bool isValid(string readNumberFromUser)
@@ -46,20 +71,18 @@ public class Program
             {
                 convertedNumber += (short)Math.Pow(2, power * (7 - i));
             }
-            Console.WriteLine(convertedNumber);
         }
         return convertedNumber;
     }
 
-    public static short CountNumberOfOnesInString(string number)
+    public static float CountNumberOfOnesInString(string number)
     {
-        short count = 0;
+        float count = 0;
         for (int i=0; i<number.Length; i++)
         {
             if (number[i] == '1')
                 count++;
         }
-
         return count; 
     }
 
