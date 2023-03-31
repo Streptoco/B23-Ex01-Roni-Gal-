@@ -5,9 +5,14 @@ public class Program
 {
     public static void Main()
     {
+        printAndInteract();
+    }
+
+    public static void printAndInteract()
+    {
         Console.WriteLine("Please enter a string containing 6 digits.");
         string inputFromUser = Console.ReadLine();
-        while(!isInputValid(inputFromUser))
+        while (!isInputValid(inputFromUser))
         {
             Console.WriteLine($"{inputFromUser} is an inavlid input. Please try again.");
             inputFromUser = Console.ReadLine();

@@ -4,14 +4,19 @@ public class Program
 {
     public static void Main()
     {
+        PrintMenuAndInteract();
+    }
+
+    public static void PrintMenuAndInteract()
+    {
         int heightInputFromUser;
         Console.WriteLine("Please enter the desired height of the diamond.");
         int.TryParse(Console.ReadLine(), out heightInputFromUser);
-        if(heightInputFromUser == 0)
+        if (heightInputFromUser == 0)
         {
             return;
         }
-        else if(heightInputFromUser % 2 == 0)
+        else if (heightInputFromUser % 2 == 0)
         {
             heightInputFromUser--;
         }

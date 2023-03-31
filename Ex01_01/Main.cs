@@ -6,8 +6,12 @@ public class Program
     public const int NUMBER_OF_ITERATIONS = 3;
     public const int DIVIDING_FACTOR = 24;
     public const int BYTE_SIZE = 8;
-    // TODO: 1. check for kelet lo huki 2. 
     public static void Main()
+    {
+        printMenuAndInteract();
+    }
+
+    public static void printMenuAndInteract()
     {
         float numberOfOnesInCurrentString = 0;
         float numberOfOnesInAllStrings = 0;
@@ -16,11 +20,15 @@ public class Program
         int numberOfNumbersDividedByFour = 0;
         int countNumberOfPalindromes = 0;
         int countNumberOfDescendingNumbers = 0;
+        int firstNumberInIteration = 0;
+        int secondNumberInIteration = 0;
+        int thirdNumberInIteration = 0;
+        int temporaryHolderForNumberComparison = 0;
         Console.WriteLine("Please enter 3 binary numbers, each containing 8 digits.");
-        for(int i = 0; i < NUMBER_OF_ITERATIONS; i++)
+        for (int i = 0; i < NUMBER_OF_ITERATIONS; i++)
         {
             string readNumberFromUser = Console.ReadLine();
-            while (readNumberFromUser.Length != BYTE_SIZE  && !isValid(readNumberFromUser))
+            while (readNumberFromUser.Length != BYTE_SIZE && !isValid(readNumberFromUser))
             {
                 Console.WriteLine("Please enter a VALID number!");
                 readNumberFromUser = Console.ReadLine();
@@ -30,23 +38,54 @@ public class Program
             numberOfOnesInAllStrings += numberOfOnesInCurrentString;
             numberOfZerosInCurrentString = (float)(BYTE_SIZE - numberOfOnesInCurrentString);
             numberOfZerosInAllStrings += numberOfZerosInCurrentString;
-            if(numberConvertedToDecimalFromBinary % 4 == 0)
+            if (numberConvertedToDecimalFromBinary % 4 == 0)
             {
                 numberOfNumbersDividedByFour++;
             }
-            if(IsPalindrome(numberConvertedToDecimalFromBinary))
+            if (IsPalindrome(numberConvertedToDecimalFromBinary))
             {
                 countNumberOfPalindromes++;
             }
-            if(AreDigitsDescendingSeries(numberConvertedToDecimalFromBinary))
+            if (AreDigitsDescendingSeries(numberConvertedToDecimalFromBinary))
             {
                 countNumberOfDescendingNumbers++;
+            }
+            if (i == 0)
+            {
+                firstNumberInIteration = numberConvertedToDecimalFromBinary;
+            }
+            else if (i == 1)
+            {
+                secondNumberInIteration = numberConvertedToDecimalFromBinary;
+                if (secondNumberInIteration > firstNumberInIteration)
+                {
+                    temporaryHolderForNumberComparison = firstNumberInIteration;
+                    firstNumberInIteration = secondNumberInIteration;
+                    secondNumberInIteration = temporaryHolderForNumberComparison;
+                }
+            }
+            else
+            {
+                thirdNumberInIteration = numberConvertedToDecimalFromBinary;
+                if (thirdNumberInIteration > firstNumberInIteration)
+                {
+                    temporaryHolderForNumberComparison = firstNumberInIteration;
+                    firstNumberInIteration = thirdNumberInIteration;
+                    thirdNumberInIteration = temporaryHolderForNumberComparison;
+                    if (secondNumberInIteration < thirdNumberInIteration)
+                    {
+                        temporaryHolderForNumberComparison = secondNumberInIteration;
+                        secondNumberInIteration = thirdNumberInIteration;
+                        thirdNumberInIteration = temporaryHolderForNumberComparison;
+                    }
+                }
             }
         }
         Console.WriteLine($"The average number of zeros: {numberOfZerosInAllStrings / NUMBER_OF_ITERATIONS}\nThe average number of ones: {numberOfOnesInAllStrings / NUMBER_OF_ITERATIONS}");
         Console.WriteLine($"The number of numbers divided by 4 is {numberOfNumbersDividedByFour}");
         Console.WriteLine($"The number of palindromes is {countNumberOfPalindromes}");
         Console.WriteLine($"The number of descending serieses in numbers is {countNumberOfDescendingNumbers}");
+        Console.WriteLine($"The numbers in decimal form are: {firstNumberInIteration}, {secondNumberInIteration}, {thirdNumberInIteration}");
     }
 
     public static bool isValid(string readNumberFromUser)

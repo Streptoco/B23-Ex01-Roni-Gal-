@@ -8,10 +8,15 @@ public class Program
     
     public static void Main()
     {
+        printMenuAndInteract();
+    }
+
+    public static void printMenuAndInteract()
+    {
         Console.WriteLine("Please enter a string containing 6 chars");
         string inputFromUser = Console.ReadLine();
         // Method to check the string
-        if(!invalidInputChecker(inputFromUser))
+        if (!invalidInputChecker(inputFromUser))
         {
             Console.WriteLine("Invalid input!");
             return;
@@ -20,11 +25,11 @@ public class Program
         Console.WriteLine(isPalindrome(inputFromUser) ? "The string is a palindrome." : "The string isn't a palindrome.");
         // Method to check if the number divides by 3
         eChoice doesTheNumberDivideByThree = doesItDivideByThree(inputFromUser);
-        if(doesTheNumberDivideByThree == eChoice.IsNotANumber)
+        if (doesTheNumberDivideByThree == eChoice.IsNotANumber)
         {
             Console.WriteLine("The string isn't a number.");
         }
-        else if(doesTheNumberDivideByThree == eChoice.isNumberAndDoesntDivideBy3)
+        else if (doesTheNumberDivideByThree == eChoice.isNumberAndDoesntDivideBy3)
         {
             Console.WriteLine("The string is a number, but it's not divisible by three.");
         }
