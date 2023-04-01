@@ -25,7 +25,7 @@ public class Program
         {
             readNumberFromUser = Console.ReadLine();
 
-            while (readNumberFromUser.Length != BYTE_SIZE && !isValid(readNumberFromUser))
+            while (!isValid(readNumberFromUser))
             {
                 Console.WriteLine("Please enter a VALID number!");
                 readNumberFromUser = Console.ReadLine();
@@ -73,7 +73,7 @@ public class Program
         Console.WriteLine($"The average number of ones: {numberOfOnesInAllStrings / NUMBER_OF_ITERATIONS}");
         Console.WriteLine($"The number of numbers divided by 4 is {countNumberOfNumbersDividedByFour}");
         Console.WriteLine($"The number of palindromes is {countNumberOfPalindromes}");
-        Console.WriteLine($"The number of descending serieses in numbers is {countNumberOfDescendingNumbers}");
+        Console.WriteLine($"The number of descending series in numbers is {countNumberOfDescendingNumbers}");
     }
 
     public static void sortAndPrintThreeDecimalsHighestToLowest(int number1, int number2, int number3)
@@ -89,9 +89,12 @@ public class Program
 
     public static bool isValid(string readNumberFromUser)
     {
+        if (readNumberFromUser.Length != BYTE_SIZE)
+            return false;
+
         for (int i = 0; i < 8; i++)
         {
-            if (readNumberFromUser[i] != 1 || readNumberFromUser[i] != 0)
+            if (readNumberFromUser[i] != '1' && readNumberFromUser[i] != '0')
             {
                 return false;
             }

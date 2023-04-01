@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text;
 
-public enum eChoice { isNumberAndDividesBy3 = 0, isNumberAndDoesntDivideBy3, IsNotANumber }
+public enum eChoice { NumberAndDividesBy3 = 0, NumberAndDoesntDivideBy3, NotANumber }
 
 public class Program
 {
@@ -28,11 +28,11 @@ public class Program
         
         // Check if the number divides by 3
         eChoice doesTheNumberDivideByThree = doesItDivideByThree(inputFromUser);
-        if (doesTheNumberDivideByThree == eChoice.IsNotANumber)
+        if (doesTheNumberDivideByThree == eChoice.NotANumber)
         {
             Console.WriteLine("The string isn't a number.");
         }
-        else if (doesTheNumberDivideByThree == eChoice.isNumberAndDoesntDivideBy3)
+        else if (doesTheNumberDivideByThree == eChoice.NumberAndDoesntDivideBy3)
         {
             Console.WriteLine("The string is a number, but it's not divisible by three.");
         }
@@ -102,11 +102,11 @@ public class Program
         
         if (int.TryParse(inputFromUser, out parseResult))
         {
-            divisionByThreeResult = parseResult % 3 == 0 ? eChoice.isNumberAndDividesBy3 : eChoice.isNumberAndDoesntDivideBy3
+            divisionByThreeResult = parseResult % 3 == 0 ? eChoice.NumberAndDividesBy3 : eChoice.NumberAndDoesntDivideBy3;
         }
         else
         {
-            divisionByThreeResult = eChoice.IsNotANumber;
+            divisionByThreeResult = eChoice.NotANumber;
         }
 
         return divisionByThreeResult;
