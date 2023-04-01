@@ -1,7 +1,7 @@
-﻿using System;
-using System.Text;
-namespace Ex01_05
+﻿namespace Ex01_05
 {
+    using System;
+
     public class Program
     {
         public static void Main()
@@ -25,6 +25,7 @@ namespace Ex01_05
             Console.WriteLine($"The number of digits divided by 3 is {getNumberOfDigitsDividedBy3(inputFromUser)}");
             Console.WriteLine($"The average of all digits is {getAverageOfDigits(inputFromUser)}");
         }
+
         public static bool isInputValid(string i_InputFromUser)
         {
             bool returnedBoolFromFunction = true;
@@ -44,6 +45,7 @@ namespace Ex01_05
 
             return returnedBoolFromFunction;
         }
+
         public static int getNumberOfDigitsBiggerThanLastDigits(string i_InputFromUser)
         {
             int digitCounter = 0;
@@ -58,6 +60,7 @@ namespace Ex01_05
 
             return digitCounter;
         }
+
         public static int getMinimumDigitsInNumber(string i_InputFromUser)
         {
             int minimumDigit = i_InputFromUser[0] - '0';
@@ -72,6 +75,7 @@ namespace Ex01_05
 
             return minimumDigit;
         }
+
         public static int getNumberOfDigitsDividedBy3(string i_InputFromUser)
         {
             int numberCounter = 0;
@@ -83,8 +87,10 @@ namespace Ex01_05
                     numberCounter++;
                 }
             }
+
             return numberCounter;
         }
+
         public static float getAverageOfDigits(string i_InputFromUser)
         {
             float digitsSummer = 0;
@@ -94,7 +100,7 @@ namespace Ex01_05
                 digitsSummer += (i_InputFromUser[i] - '0');
             }
 
-            return (digitsSummer / i_InputFromUser.Length);
+            return digitsSummer / i_InputFromUser.Length;
         }
     }
 }

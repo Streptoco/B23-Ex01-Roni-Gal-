@@ -1,17 +1,17 @@
-﻿using System;
-using System.Text;
-
-public enum eChoice 
-{ 
-  NumberAndDividesBy3, 
-  NumberAndDoesntDivideBy3, 
-  NotANumber,
-}
-namespace Ex01_04
+﻿namespace Ex01_04
 {
+    using System;
+    using System.Text;
+
+    public enum eChoice
+    {
+        NumberAndDividesBy3,
+        NumberAndDoesntDivideBy3,
+        NotANumber,
+    }
+
     public class Program
     {
-
         public static void Main()
         {
             printMenuAndInteract();
@@ -51,6 +51,7 @@ namespace Ex01_04
             int countUpperCaseLetters = countUppercaseLettersInString(inputFromUser);
             Console.WriteLine($"The number of uppercase letters in the string is {countUpperCaseLetters}");
         }
+
         public static bool invalidInputChecker(string i_InputFromUser)
         {
             bool returnedBoolFromFunction = true;
@@ -87,6 +88,7 @@ namespace Ex01_04
 
             return returnedBoolFromFunction;
         }
+
         public static bool isPalindrome(string i_InputFromUser)
         {
             bool returnedBoolFromFunction = true;
@@ -99,6 +101,7 @@ namespace Ex01_04
             {
                 returnedBoolFromFunction = false;
             }
+
             return returnedBoolFromFunction;
         }
 

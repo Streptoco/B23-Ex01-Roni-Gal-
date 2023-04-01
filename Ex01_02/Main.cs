@@ -1,7 +1,7 @@
-﻿using System;
-
-namespace Ex01_02
+﻿namespace Ex01_02
 {
+    using System;
+
     public class Program
     {
         public static void Main()
@@ -16,17 +16,17 @@ namespace Ex01_02
                 Console.Write('\n');
                 return;
             }
-            else if (i_NumberOfSpacesInRow > 0) // Invoke the left space-bars in the pattern
+            else if (i_NumberOfSpacesInRow > 0) 
             {
                 Console.Write(" ");
                 printRow(i_NumberOfStarsInRow, i_NumberOfSpacesInRow - 1, i_FixedRowLength - 1);
             }
-            else if (i_NumberOfStarsInRow > 0) // Invoke the stars in the pattern
+            else if (i_NumberOfStarsInRow > 0) 
             {
                 Console.Write("*");
                 printRow(i_NumberOfStarsInRow - 1, i_NumberOfSpacesInRow, i_FixedRowLength - 1);
             }
-            else // Invoke the right space-bars in the pattern
+            else 
             {
                 Console.Write(" ");
                 printRow(i_NumberOfStarsInRow, i_NumberOfSpacesInRow, i_FixedRowLength - 1);
@@ -39,6 +39,7 @@ namespace Ex01_02
             {
                 return;
             }
+
             printRow(i_NumberOfStars, (i_Height - i_NumberOfStars) / 2, i_Height);
             printDiamondRecursive(i_NumberOfStars + 2, i_Height);
 
@@ -46,6 +47,7 @@ namespace Ex01_02
             {
                 return;
             }
+
             printRow(i_NumberOfStars, (i_Height - i_NumberOfStars) / 2, i_Height);
         }
 

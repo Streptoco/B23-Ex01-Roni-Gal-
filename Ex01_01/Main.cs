@@ -1,13 +1,13 @@
-﻿using System;
-
-namespace Ex01_01
+﻿namespace Ex01_01
 {
+    using System;
 
     public class Program
     {
         public const int k_NumberOfIterations = 3;
         public const int k_DividingFactor = 24;
         public const int k_ByteSize = 8;
+
         public static void Main()
         {
             printMenuAndInteract();
@@ -98,7 +98,7 @@ namespace Ex01_01
             {
                 if (i_ReadNumberFromUser[i] != '1' && i_ReadNumberFromUser[i] != '0')
                 {
-                    return returnBoolFromFunction;
+                    returnBoolFromFunction = false;
                 }
             }
 
@@ -114,7 +114,7 @@ namespace Ex01_01
         {
             int convertedNumber = 0;
 
-            for (int i = 0; i <= k_ByteSize-1; i++)
+            for (int i = 0; i <= k_ByteSize - 1; i++)
             {
                 int power = i_BinaryString[i] - '0';
                 if (power != 0)
@@ -133,7 +133,9 @@ namespace Ex01_01
             for (int i = 0; i < i_Number.Length; i++)
             {
                 if (i_Number[i] == '1')
+                {
                     count++;
+                }
             }
 
             return count;
@@ -150,7 +152,7 @@ namespace Ex01_01
                 i_Number = i_Number / 10;
             }
 
-            return (numberCopy == numberReversed);
+            return numberCopy == numberReversed;
         }
 
         public static bool AreDigitsDescendingSeries(int i_Number)
