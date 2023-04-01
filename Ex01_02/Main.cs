@@ -1,54 +1,57 @@
 ﻿using System;
 
-public class Program
+namespace Ex01_02
 {
-    public static void Main()
+    public class Program
     {
-        printDiamond(1, 9);
-    }
+        public static void Main()
+        {
+            printDiamond(1, 9);
+        }
 
-    public static void printRow(int numberOfStarsInRow, int numberOfSpacesInRow, int fixedRowLength)
-    {
-        if (fixedRowLength == 0)
+        public static void printRow(int i_NumberOfStarsInRow, int i_NumberOfSpacesInRow, int i_FixedRowLength)
         {
-            Console.Write('\n');
-            return;
+            if (i_FixedRowLength == 0)
+            {
+                Console.Write('\n');
+                return;
+            }
+            else if (i_NumberOfSpacesInRow > 0) // Invoke the left space-bars in the pattern
+            {
+                Console.Write(" ");
+                printRow(i_NumberOfStarsInRow, i_NumberOfSpacesInRow - 1, i_FixedRowLength - 1);
+            }
+            else if (i_NumberOfStarsInRow > 0) // Invoke the stars in the pattern
+            {
+                Console.Write("*");
+                printRow(i_NumberOfStarsInRow - 1, i_NumberOfSpacesInRow, i_FixedRowLength - 1);
+            }
+            else // Invoke the right space-bars in the pattern
+            {
+                Console.Write(" ");
+                printRow(i_NumberOfStarsInRow, i_NumberOfSpacesInRow, i_FixedRowLength - 1);
+            }
         }
-        else if(numberOfSpacesInRow > 0) // Invoke the left space-bars in the pattern
-        {
-            Console.Write(" ");
-            printRow(numberOfStarsInRow, numberOfSpacesInRow-1, fixedRowLength-1);
-        }
-        else if(numberOfStarsInRow > 0 ) // Invoke the stars in the pattern
-        {
-            Console.Write("*");
-            printRow(numberOfStarsInRow - 1, numberOfSpacesInRow, fixedRowLength - 1);
-        }
-        else // Invoke the right space-bars in the pattern
-        {
-            Console.Write(" ");
-            printRow(numberOfStarsInRow, numberOfSpacesInRow, fixedRowLength - 1);
-        }
-    }
 
-    public static void printDiamondRecursive(int numberOfStars, int height)
-    {
-        if (height < numberOfStars)
+        public static void printDiamondRecursive(int i_NumberOfStars, int i_Height)
         {
-            return;
-        }
-        printRow(numberOfStars, (height - numberOfStars)/2, height);
-        printDiamondRecursive(numberOfStars + 2, height);
-        
-        if (height == numberOfStars)
-        {
-            return;
-        }
-        printRow(numberOfStars, (height - numberOfStars)/2, height);
-    }
+            if (i_Height < i_NumberOfStars)
+            {
+                return;
+            }
+            printRow(i_NumberOfStars, (i_Height - i_NumberOfStars) / 2, i_Height);
+            printDiamondRecursive(i_NumberOfStars + 2, i_Height);
 
-    public static void printDiamond(int numberOfStars, int height)
-    {
-        printDiamondRecursive(numberOfStars, height);
+            if (i_Height == i_NumberOfStars)
+            {
+                return;
+            }
+            printRow(i_NumberOfStars, (i_Height - i_NumberOfStars) / 2, i_Height);
+        }
+
+        public static void printDiamond(int i_NumberOfStars, int i_Height)
+        {
+            printDiamondRecursive(i_NumberOfStars, i_Height);
+        }
     }
 }

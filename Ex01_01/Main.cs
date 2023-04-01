@@ -1,163 +1,167 @@
 ﻿using System;
 
-public class Program
+namespace Ex01_01
 {
-    public const int NUMBER_OF_ITERATIONS = 3;
-    public const int DIVIDING_FACTOR = 24;
-    public const int BYTE_SIZE = 8;
-    public static void Main()
+
+    public class Program
     {
-        printMenuAndInteract();
-    }
-
-    public static void printMenuAndInteract()
-    {
-        int firstNumberInIteration = 0, secondNumberInIteration = 0, thirdNumberInIteration = 0;
-
-        float numberOfOnesInCurrentString = 0, numberOfZerosInCurrentString = 0;
-        float numberOfOnesInAllStrings = 0, numberOfZerosInAllStrings = 0;
-        int countNumberOfNumbersDividedByFour = 0, countNumberOfPalindromes = 0, countNumberOfDescendingNumbers = 0;
-        string readNumberFromUser;
-        int numberConvertedToDecimalFromBinary;
-
-        Console.WriteLine("Please enter 3 binary numbers, each containing 8 digits.");
-        for (int i = 0; i < NUMBER_OF_ITERATIONS; i++)
+        public const int k_NumberOfIterations = 3;
+        public const int k_DividingFactor = 24;
+        public const int k_ByteSize = 8;
+        public static void Main()
         {
-            readNumberFromUser = Console.ReadLine();
+            printMenuAndInteract();
+        }
 
-            while (!isValid(readNumberFromUser))
+        public static void printMenuAndInteract()
+        {
+            int firstNumberInIteration = 0, secondNumberInIteration = 0, thirdNumberInIteration = 0;
+
+            float numberOfOnesInCurrentString = 0, numberOfZerosInCurrentString = 0;
+            float numberOfOnesInAllStrings = 0, numberOfZerosInAllStrings = 0;
+            int countNumberOfNumbersDividedByFour = 0, countNumberOfPalindromes = 0, countNumberOfDescendingNumbers = 0;
+            string readNumberFromUser;
+            int numberConvertedToDecimalFromBinary;
+
+            Console.WriteLine("Please enter 3 binary numbers, each containing 8 digits.");
+            for (int i = 0; i < k_NumberOfIterations; i++)
             {
-                Console.WriteLine("Please enter a VALID number!");
                 readNumberFromUser = Console.ReadLine();
+
+                while (!isValid(readNumberFromUser))
+                {
+                    Console.WriteLine("Please enter a VALID number!");
+                    readNumberFromUser = Console.ReadLine();
+                }
+
+                numberConvertedToDecimalFromBinary = ConvertToDecimal(readNumberFromUser);
+
+                if (i == 0)
+                {
+                    firstNumberInIteration = numberConvertedToDecimalFromBinary;
+                }
+                else if (i == 1)
+                {
+                    secondNumberInIteration = numberConvertedToDecimalFromBinary;
+                }
+                else if (i == 2)
+                {
+                    thirdNumberInIteration = numberConvertedToDecimalFromBinary;
+                }
+
+                if (numberConvertedToDecimalFromBinary % 4 == 0)
+                {
+                    countNumberOfNumbersDividedByFour++;
+                }
+
+                if (IsPalindrome(numberConvertedToDecimalFromBinary))
+                {
+                    countNumberOfPalindromes++;
+                }
+
+                if (AreDigitsDescendingSeries(numberConvertedToDecimalFromBinary))
+                {
+                    countNumberOfDescendingNumbers++;
+                }
+
+                numberOfOnesInCurrentString = CountNumberOfOnesInString(readNumberFromUser);
+                numberOfOnesInAllStrings += numberOfOnesInCurrentString;
+                numberOfZerosInCurrentString = (float)(k_ByteSize - numberOfOnesInCurrentString);
+                numberOfZerosInAllStrings += numberOfZerosInCurrentString;
             }
 
-            numberConvertedToDecimalFromBinary = ConvertToDecimal(readNumberFromUser);
+            sortAndPrintThreeDecimalsHighestToLowest(firstNumberInIteration, secondNumberInIteration, thirdNumberInIteration);
 
-            if (i == 0)
-            {
-                firstNumberInIteration = numberConvertedToDecimalFromBinary;
-            }
-            else if (i == 1)
-            {
-                secondNumberInIteration = numberConvertedToDecimalFromBinary;
-            } 
-            else if (i == 2)
-            {
-                thirdNumberInIteration = numberConvertedToDecimalFromBinary;
-            }
-
-            if (numberConvertedToDecimalFromBinary % 4 == 0)
-            {
-                countNumberOfNumbersDividedByFour++;
-            }
-
-            if (IsPalindrome(numberConvertedToDecimalFromBinary))
-            {
-                countNumberOfPalindromes++;
-            }
-
-            if (AreDigitsDescendingSeries(numberConvertedToDecimalFromBinary))
-            {
-                countNumberOfDescendingNumbers++;
-            }
-
-            numberOfOnesInCurrentString = CountNumberOfOnesInString(readNumberFromUser);
-            numberOfOnesInAllStrings += numberOfOnesInCurrentString;
-            numberOfZerosInCurrentString = (float)(BYTE_SIZE - numberOfOnesInCurrentString);
-            numberOfZerosInAllStrings += numberOfZerosInCurrentString;
+            Console.WriteLine($"The average number of zeros: {numberOfZerosInAllStrings / k_NumberOfIterations}");
+            Console.WriteLine($"The average number of ones: {numberOfOnesInAllStrings / k_NumberOfIterations}");
+            Console.WriteLine($"The number of numbers divided by 4 is {countNumberOfNumbersDividedByFour}");
+            Console.WriteLine($"The number of palindromes is {countNumberOfPalindromes}");
+            Console.WriteLine($"The number of descending series in numbers is {countNumberOfDescendingNumbers}");
         }
 
-        sortAndPrintThreeDecimalsHighestToLowest(firstNumberInIteration, secondNumberInIteration, thirdNumberInIteration);
-
-        Console.WriteLine($"The average number of zeros: {numberOfZerosInAllStrings / NUMBER_OF_ITERATIONS}");
-        Console.WriteLine($"The average number of ones: {numberOfOnesInAllStrings / NUMBER_OF_ITERATIONS}");
-        Console.WriteLine($"The number of numbers divided by 4 is {countNumberOfNumbersDividedByFour}");
-        Console.WriteLine($"The number of palindromes is {countNumberOfPalindromes}");
-        Console.WriteLine($"The number of descending series in numbers is {countNumberOfDescendingNumbers}");
-    }
-
-    public static void sortAndPrintThreeDecimalsHighestToLowest(int number1, int number2, int number3)
-    {
-        int highest, lowest, middle;
-
-        highest = Math.Max(Math.Max(number1, number2), number3);
-        lowest = Math.Min(Math.Min(number1, number2), number3);
-        middle = number1 + number2 + number3 - highest - lowest;
-
-        Console.WriteLine($"The numbers in decimal form (from highest to lowest are: {highest}, {middle}, {lowest}");
-    }
-
-    public static bool isValid(string readNumberFromUser)
-    {
-        if (readNumberFromUser.Length != BYTE_SIZE)
-            return false;
-
-        for (int i = 0; i < 8; i++)
+        public static void sortAndPrintThreeDecimalsHighestToLowest(int i_FirstNumber, int i_SecondNumber, int i_ThirdNumber)
         {
-            if (readNumberFromUser[i] != '1' && readNumberFromUser[i] != '0')
-            {
+            int highest, lowest, middle;
+
+            highest = Math.Max(Math.Max(i_FirstNumber, i_SecondNumber), i_ThirdNumber);
+            lowest = Math.Min(Math.Min(i_FirstNumber, i_SecondNumber), i_ThirdNumber);
+            middle = i_FirstNumber + i_SecondNumber + i_ThirdNumber - highest - lowest;
+
+            Console.WriteLine($"The numbers in decimal form (from highest to lowest are: {highest}, {middle}, {lowest})");
+        }
+
+        public static bool isValid(string i_ReadNumberFromUser)
+        {
+            if (i_ReadNumberFromUser.Length != k_ByteSize)
                 return false;
-            }
-        }
 
-        return true;
-    }
-
-    public static int ConvertToDecimal(string binaryString)
-    {
-        int convertedNumber = 0;
-        
-        for (int i = 0; i <= 7; i++)
-        {
-            int power = binaryString[i] - '0';
-            if (power != 0)
+            for (int i = 0; i < k_ByteSize; i++)
             {
-                convertedNumber += (int)Math.Pow(2, power * (7 - i));
+                if (i_ReadNumberFromUser[i] != '1' && i_ReadNumberFromUser[i] != '0')
+                {
+                    return false;
+                }
             }
+
+            return true;
         }
 
-        return convertedNumber;
-    }
-
-    public static float CountNumberOfOnesInString(string number)
-    {
-        float count = 0;
-
-        for (int i = 0; i < number.Length; i++)
+        public static int ConvertToDecimal(string i_BinaryString)
         {
-            if (number[i] == '1')
-                count++;
-        }
+            int convertedNumber = 0;
 
-        return count; 
-    }
-
-    public static bool IsPalindrome(int number)
-    {
-        int numberReversed = 0, numberCopy = number, digit;
-        
-        while (number != 0)
-        {
-            digit = number % 10;
-            numberReversed = (numberReversed * 10) + digit;
-            number = number / 10;
-        }
-
-        return (numberCopy == numberReversed);
-    }
-
-    public static bool AreDigitsDescendingSeries(int number)
-    {
-        while (number / 10 != 0)
-        {
-            if (number % 10 >= (number / 10) % 10)
+            for (int i = 0; i <= k_ByteSize-1; i++)
             {
-                return false;
+                int power = i_BinaryString[i] - '0';
+                if (power != 0)
+                {
+                    convertedNumber += (int)Math.Pow(2, power * (7 - i));
+                }
             }
 
-            number = number / 10;
+            return convertedNumber;
         }
 
-        return true;
+        public static float CountNumberOfOnesInString(string i_Number)
+        {
+            float count = 0;
+
+            for (int i = 0; i < i_Number.Length; i++)
+            {
+                if (i_Number[i] == '1')
+                    count++;
+            }
+
+            return count;
+        }
+
+        public static bool IsPalindrome(int i_Number)
+        {
+            int numberReversed = 0, numberCopy = i_Number, digit;
+
+            while (i_Number != 0)
+            {
+                digit = i_Number % 10;
+                numberReversed = (numberReversed * 10) + digit;
+                i_Number = i_Number / 10;
+            }
+
+            return (numberCopy == numberReversed);
+        }
+
+        public static bool AreDigitsDescendingSeries(int i_Number)
+        {
+            while (i_Number / 10 != 0)
+            {
+                if (i_Number % 10 >= (i_Number / 10) % 10)
+                {
+                    return false;
+                }
+
+                i_Number = i_Number / 10;
+            }
+
+            return true;
+        }
     }
 }

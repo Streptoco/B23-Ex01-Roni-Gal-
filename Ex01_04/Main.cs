@@ -1,129 +1,136 @@
 ﻿using System;
 using System.Text;
 
-public enum eChoice { NumberAndDividesBy3 = 0, NumberAndDoesntDivideBy3, NotANumber }
-
-public class Program
+public enum eChoice 
+{ 
+  NumberAndDividesBy3, 
+  NumberAndDoesntDivideBy3, 
+  NotANumber,
+}
+namespace Ex01_04
 {
-    
-    public static void Main()
+    public class Program
     {
-        printMenuAndInteract();
-    }
 
-    public static void printMenuAndInteract()
-    {
-        Console.WriteLine("Please enter a string containing 6 chars");
-        string inputFromUser = Console.ReadLine();
-        
-        // Check if the string is valid
-        if (!invalidInputChecker(inputFromUser))
+        public static void Main()
         {
-            Console.WriteLine("Invalid input!");
-            return;
-        }
-        
-        // Check if it's a palindrome
-        Console.WriteLine(isPalindrome(inputFromUser) ? "The string is a palindrome." : "The string isn't a palindrome.");
-        
-        // Check if the number divides by 3
-        eChoice doesTheNumberDivideByThree = doesItDivideByThree(inputFromUser);
-        if (doesTheNumberDivideByThree == eChoice.NotANumber)
-        {
-            Console.WriteLine("The string isn't a number.");
-        }
-        else if (doesTheNumberDivideByThree == eChoice.NumberAndDoesntDivideBy3)
-        {
-            Console.WriteLine("The string is a number, but it's not divisible by three.");
-        }
-        else
-        {
-            Console.WriteLine("The string is a number, and it is divided by three.");
+            printMenuAndInteract();
         }
 
-        // Check how many uppercase letters are there
-        int countUpperCaseLetters = countUppercaseLettersInString(inputFromUser);
-        Console.WriteLine($"The number of uppercase letters in the string is {countUpperCaseLetters}");
-    }
-    public static bool invalidInputChecker(string inputFromUser)
-    {
-        if (inputFromUser.Length != 6)
+        public static void printMenuAndInteract()
         {
-            return false;
-        }
-        else if ((inputFromUser[0] >= 'a' && inputFromUser[0] <= 'z') || (inputFromUser[0] >= 'A' && inputFromUser[0] <= 'Z'))
-        {
-            for (int i = 1; i < inputFromUser.Length; i++)
+            Console.WriteLine("Please enter a string containing 6 chars");
+            string inputFromUser = Console.ReadLine();
+
+            // Check if the string is valid
+            if (!invalidInputChecker(inputFromUser))
             {
-                if ((inputFromUser[i] < 'a' || inputFromUser[i] > 'z') && (inputFromUser[i] < 'A' || inputFromUser[i] > 'Z'))
+                Console.WriteLine("Invalid input!");
+                return;
+            }
+
+            // Check if it's a palindrome
+            Console.WriteLine(isPalindrome(inputFromUser) ? "The string is a palindrome." : "The string isn't a palindrome.");
+
+            // Check if the number divides by 3
+            eChoice doesTheNumberDivideByThree = doesItDivideByThree(inputFromUser);
+            if (doesTheNumberDivideByThree == eChoice.NotANumber)
+            {
+                Console.WriteLine("The string isn't a number.");
+            }
+            else if (doesTheNumberDivideByThree == eChoice.NumberAndDoesntDivideBy3)
+            {
+                Console.WriteLine("The string is a number, but it's not divisible by three.");
+            }
+            else
+            {
+                Console.WriteLine("The string is a number, and it is divided by three.");
+            }
+
+            // Check how many uppercase letters are there
+            int countUpperCaseLetters = countUppercaseLettersInString(inputFromUser);
+            Console.WriteLine($"The number of uppercase letters in the string is {countUpperCaseLetters}");
+        }
+        public static bool invalidInputChecker(string i_InputFromUser)
+        {
+            if (i_InputFromUser.Length != 6)
+            {
+                return false;
+            }
+            else if ((i_InputFromUser[0] >= 'a' && i_InputFromUser[0] <= 'z') || (i_InputFromUser[0] >= 'A' && i_InputFromUser[0] <= 'Z'))
+            {
+                for (int i = 1; i < i_InputFromUser.Length; i++)
                 {
-                    return false;
+                    if ((i_InputFromUser[i] < 'a' || i_InputFromUser[i] > 'z') && (i_InputFromUser[i] < 'A' || i_InputFromUser[i] > 'Z'))
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            }
+            else if (i_InputFromUser[0] >= '0' && i_InputFromUser[0] <= '9')
+            {
+                for (int i = 1; i < i_InputFromUser.Length; i++)
+                {
+                    if (i_InputFromUser[i] < '0' || i_InputFromUser[i] > '9')
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        public static bool isPalindrome(string i_InputFromUser)
+        {
+            if (i_InputFromUser.Length == 1 || i_InputFromUser.Length == 0)
+            {
+                return true;
+            }
+            else if (i_InputFromUser[0] == i_InputFromUser[i_InputFromUser.Length - 1])
+            {
+                StringBuilder sb = new StringBuilder(i_InputFromUser);
+                return isPalindrome(sb.ToString(1, i_InputFromUser.Length - 2));
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public static eChoice doesItDivideByThree(string i_InputFromUser)
+        {
+            int parseResult;
+            eChoice divisionByThreeResult;
+
+            if (int.TryParse(i_InputFromUser, out parseResult))
+            {
+                divisionByThreeResult = parseResult % 3 == 0 ? eChoice.NumberAndDividesBy3 : eChoice.NumberAndDoesntDivideBy3;
+            }
+            else
+            {
+                divisionByThreeResult = eChoice.NotANumber;
+            }
+
+            return divisionByThreeResult;
+        }
+
+        public static int countUppercaseLettersInString(string i_InputFromUser)
+        {
+            int countNumberOfUpperLetters = 0;
+
+            for (int i = 0; i < i_InputFromUser.Length; i++)
+            {
+                if (char.IsUpper(i_InputFromUser[i]))
+                {
+                    countNumberOfUpperLetters++;
                 }
             }
-            return true;
-        }
-        else if (inputFromUser[0] >= '0' && inputFromUser[0] <= '9')
-        {
-            for (int i = 1; i < inputFromUser.Length; i++)
-            {
-                if (inputFromUser[i] < '0' || inputFromUser[i] >  '9')
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
-        else
-        {
-            return false;
-        }    
-    }
-    public static bool isPalindrome(string inputFromUser)
-    {
-        if (inputFromUser.Length == 1 || inputFromUser.Length == 0)
-        {
-            return true;
-        }
-        else if (inputFromUser[0] == inputFromUser[inputFromUser.Length - 1])
-        {
-            StringBuilder sb = new StringBuilder(inputFromUser);
-            return isPalindrome(sb.ToString(1, inputFromUser.Length - 2));
-        }
-        else
-        {
-            return false;
-        }
-    }
 
-    public static eChoice doesItDivideByThree(string inputFromUser)
-    {
-        int parseResult;
-        eChoice divisionByThreeResult;
-        
-        if (int.TryParse(inputFromUser, out parseResult))
-        {
-            divisionByThreeResult = parseResult % 3 == 0 ? eChoice.NumberAndDividesBy3 : eChoice.NumberAndDoesntDivideBy3;
+            return countNumberOfUpperLetters;
         }
-        else
-        {
-            divisionByThreeResult = eChoice.NotANumber;
-        }
-
-        return divisionByThreeResult;
-    }
-
-    public static int countUppercaseLettersInString(string inputFromUser)
-    {
-        int countNumberOfUpperLetters = 0;
-        
-        for (int i = 0; i < inputFromUser.Length; i++)
-        {
-            if (char.IsUpper(inputFromUser[i]))
-            {
-                countNumberOfUpperLetters++;
-            }
-        }
-
-        return countNumberOfUpperLetters;
     }
 }
