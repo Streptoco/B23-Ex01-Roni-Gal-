@@ -92,18 +92,22 @@ namespace Ex01_01
 
         public static bool isValid(string i_ReadNumberFromUser)
         {
-            if (i_ReadNumberFromUser.Length != k_ByteSize)
-                return false;
+            bool returnBoolFromFunction = true;
 
             for (int i = 0; i < k_ByteSize; i++)
             {
                 if (i_ReadNumberFromUser[i] != '1' && i_ReadNumberFromUser[i] != '0')
                 {
-                    return false;
+                    return returnBoolFromFunction;
                 }
             }
 
-            return true;
+            if (i_ReadNumberFromUser.Length != k_ByteSize)
+            {
+                returnBoolFromFunction = false;
+            }
+
+            return returnBoolFromFunction;
         }
 
         public static int ConvertToDecimal(string i_BinaryString)
@@ -151,17 +155,18 @@ namespace Ex01_01
 
         public static bool AreDigitsDescendingSeries(int i_Number)
         {
+            bool returnBoolFromFunction = true;
             while (i_Number / 10 != 0)
             {
                 if (i_Number % 10 >= (i_Number / 10) % 10)
                 {
-                    return false;
+                    returnBoolFromFunction = false;
                 }
 
                 i_Number = i_Number / 10;
             }
 
-            return true;
+            return returnBoolFromFunction;
         }
     }
 }

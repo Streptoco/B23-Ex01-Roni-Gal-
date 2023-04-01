@@ -27,19 +27,22 @@ namespace Ex01_05
         }
         public static bool isInputValid(string i_InputFromUser)
         {
-            if (i_InputFromUser.Length != 6)
-            {
-                return false;
-            }
-
+            bool returnedBoolFromFunction = true;
+           
             for (int i = 0; i < i_InputFromUser.Length; i++)
             {
                 if (i_InputFromUser[i] < '0' || i_InputFromUser[i] > '9')
                 {
-                    return false;
+                    returnedBoolFromFunction = false;
                 }
             }
-            return true;
+
+            if (i_InputFromUser.Length != 6)
+            {
+                returnedBoolFromFunction = false;
+            }
+
+            return returnedBoolFromFunction;
         }
         public static int getNumberOfDigitsBiggerThanLastDigits(string i_InputFromUser)
         {

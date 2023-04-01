@@ -53,20 +53,17 @@ namespace Ex01_04
         }
         public static bool invalidInputChecker(string i_InputFromUser)
         {
-            if (i_InputFromUser.Length != 6)
-            {
-                return false;
-            }
-            else if ((i_InputFromUser[0] >= 'a' && i_InputFromUser[0] <= 'z') || (i_InputFromUser[0] >= 'A' && i_InputFromUser[0] <= 'Z'))
+            bool returnedBoolFromFunction = true;
+            
+            if ((i_InputFromUser[0] >= 'a' && i_InputFromUser[0] <= 'z') || (i_InputFromUser[0] >= 'A' && i_InputFromUser[0] <= 'Z'))
             {
                 for (int i = 1; i < i_InputFromUser.Length; i++)
                 {
                     if ((i_InputFromUser[i] < 'a' || i_InputFromUser[i] > 'z') && (i_InputFromUser[i] < 'A' || i_InputFromUser[i] > 'Z'))
                     {
-                        return false;
+                        returnedBoolFromFunction = false;
                     }
                 }
-                return true;
             }
             else if (i_InputFromUser[0] >= '0' && i_InputFromUser[0] <= '9')
             {
@@ -74,31 +71,35 @@ namespace Ex01_04
                 {
                     if (i_InputFromUser[i] < '0' || i_InputFromUser[i] > '9')
                     {
-                        return false;
+                        returnedBoolFromFunction = false;
                     }
                 }
-                return true;
             }
             else
             {
-                return false;
+                returnedBoolFromFunction = false;
             }
+
+            if (i_InputFromUser.Length != 6)
+            {
+                returnedBoolFromFunction = false;
+            }
+
+            return returnedBoolFromFunction;
         }
         public static bool isPalindrome(string i_InputFromUser)
         {
-            if (i_InputFromUser.Length == 1 || i_InputFromUser.Length == 0)
-            {
-                return true;
-            }
-            else if (i_InputFromUser[0] == i_InputFromUser[i_InputFromUser.Length - 1])
+            bool returnedBoolFromFunction = true;
+            if (i_InputFromUser[0] == i_InputFromUser[i_InputFromUser.Length - 1])
             {
                 StringBuilder sb = new StringBuilder(i_InputFromUser);
-                return isPalindrome(sb.ToString(1, i_InputFromUser.Length - 2));
+                returnedBoolFromFunction = isPalindrome(sb.ToString(1, i_InputFromUser.Length - 2));
             }
             else
             {
-                return false;
+                returnedBoolFromFunction = false;
             }
+            return returnedBoolFromFunction;
         }
 
         public static eChoice doesItDivideByThree(string i_InputFromUser)
