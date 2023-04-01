@@ -10,8 +10,10 @@ public class Program
     public static void PrintMenuAndInteract()
     {
         int heightInputFromUser;
+
         Console.WriteLine("Please enter the desired height of the diamond.");
         int.TryParse(Console.ReadLine(), out heightInputFromUser);
+       
         if (heightInputFromUser == 0)
         {
             return;
@@ -20,6 +22,7 @@ public class Program
         {
             heightInputFromUser--;
         }
+
         printDiamond(1, heightInputFromUser);
     }
 
@@ -53,8 +56,10 @@ public class Program
         {
             return;
         }
+
         printRow(numberOfStars, (height - numberOfStars) / 2, height);
         printDiamondRecursive(numberOfStars + 2, height);
+       
         if (height == numberOfStars)
         {
             return;

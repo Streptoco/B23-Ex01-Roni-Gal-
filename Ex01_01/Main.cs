@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Net.NetworkInformation;
 
 public class Program
 {
@@ -13,43 +12,27 @@ public class Program
 
     public static void printMenuAndInteract()
     {
-        float numberOfOnesInCurrentString = 0;
-        float numberOfOnesInAllStrings = 0;
-        float numberOfZerosInCurrentString = 0;
-        float numberOfZerosInAllStrings = 0;
-        int numberOfNumbersDividedByFour = 0;
-        int countNumberOfPalindromes = 0;
-        int countNumberOfDescendingNumbers = 0;
-        int firstNumberInIteration = 0;
-        int secondNumberInIteration = 0;
-        int thirdNumberInIteration = 0;
-        int temporaryHolderForNumberComparison = 0;
+        int firstNumberInIteration = 0, secondNumberInIteration = 0, thirdNumberInIteration = 0;
+
+        float numberOfOnesInCurrentString = 0, numberOfZerosInCurrentString = 0;
+        float numberOfOnesInAllStrings = 0, numberOfZerosInAllStrings = 0;
+        int countNumberOfNumbersDividedByFour = 0, countNumberOfPalindromes = 0, countNumberOfDescendingNumbers = 0;
+        string readNumberFromUser;
+        int numberConvertedToDecimalFromBinary;
+
         Console.WriteLine("Please enter 3 binary numbers, each containing 8 digits.");
         for (int i = 0; i < NUMBER_OF_ITERATIONS; i++)
         {
-            string readNumberFromUser = Console.ReadLine();
+            readNumberFromUser = Console.ReadLine();
+
             while (readNumberFromUser.Length != BYTE_SIZE && !isValid(readNumberFromUser))
             {
                 Console.WriteLine("Please enter a VALID number!");
                 readNumberFromUser = Console.ReadLine();
             }
-            short numberConvertedToDecimalFromBinary = ConvertToDecimal(readNumberFromUser);
-            numberOfOnesInCurrentString = CountNumberOfOnesInString(readNumberFromUser);
-            numberOfOnesInAllStrings += numberOfOnesInCurrentString;
-            numberOfZerosInCurrentString = (float)(BYTE_SIZE - numberOfOnesInCurrentString);
-            numberOfZerosInAllStrings += numberOfZerosInCurrentString;
-            if (numberConvertedToDecimalFromBinary % 4 == 0)
-            {
-                numberOfNumbersDividedByFour++;
-            }
-            if (IsPalindrome(numberConvertedToDecimalFromBinary))
-            {
-                countNumberOfPalindromes++;
-            }
-            if (AreDigitsDescendingSeries(numberConvertedToDecimalFromBinary))
-            {
-                countNumberOfDescendingNumbers++;
-            }
+
+            numberConvertedToDecimalFromBinary = ConvertToDecimal(readNumberFromUser);
+
             if (i == 0)
             {
                 firstNumberInIteration = numberConvertedToDecimalFromBinary;
@@ -57,71 +40,92 @@ public class Program
             else if (i == 1)
             {
                 secondNumberInIteration = numberConvertedToDecimalFromBinary;
-                if (secondNumberInIteration > firstNumberInIteration)
-                {
-                    temporaryHolderForNumberComparison = firstNumberInIteration;
-                    firstNumberInIteration = secondNumberInIteration;
-                    secondNumberInIteration = temporaryHolderForNumberComparison;
-                }
-            }
-            else
+            } 
+            else if (i == 2)
             {
                 thirdNumberInIteration = numberConvertedToDecimalFromBinary;
-                if (thirdNumberInIteration > firstNumberInIteration)
-                {
-                    temporaryHolderForNumberComparison = firstNumberInIteration;
-                    firstNumberInIteration = thirdNumberInIteration;
-                    thirdNumberInIteration = temporaryHolderForNumberComparison;
-                    if (secondNumberInIteration < thirdNumberInIteration)
-                    {
-                        temporaryHolderForNumberComparison = secondNumberInIteration;
-                        secondNumberInIteration = thirdNumberInIteration;
-                        thirdNumberInIteration = temporaryHolderForNumberComparison;
-                    }
-                }
             }
+
+            if (numberConvertedToDecimalFromBinary % 4 == 0)
+            {
+                countNumberOfNumbersDividedByFour++;
+            }
+
+            if (IsPalindrome(numberConvertedToDecimalFromBinary))
+            {
+                countNumberOfPalindromes++;
+            }
+
+            if (AreDigitsDescendingSeries(numberConvertedToDecimalFromBinary))
+            {
+                countNumberOfDescendingNumbers++;
+            }
+
+            numberOfOnesInCurrentString = CountNumberOfOnesInString(readNumberFromUser);
+            numberOfOnesInAllStrings += numberOfOnesInCurrentString;
+            numberOfZerosInCurrentString = (float)(BYTE_SIZE - numberOfOnesInCurrentString);
+            numberOfZerosInAllStrings += numberOfZerosInCurrentString;
         }
-        Console.WriteLine($"The average number of zeros: {numberOfZerosInAllStrings / NUMBER_OF_ITERATIONS}\nThe average number of ones: {numberOfOnesInAllStrings / NUMBER_OF_ITERATIONS}");
-        Console.WriteLine($"The number of numbers divided by 4 is {numberOfNumbersDividedByFour}");
+
+        sortAndPrintThreeDecimalsHighestToLowest(firstNumberInIteration, secondNumberInIteration, thirdNumberInIteration);
+
+        Console.WriteLine($"The average number of zeros: {numberOfZerosInAllStrings / NUMBER_OF_ITERATIONS}");
+        Console.WriteLine($"The average number of ones: {numberOfOnesInAllStrings / NUMBER_OF_ITERATIONS}");
+        Console.WriteLine($"The number of numbers divided by 4 is {countNumberOfNumbersDividedByFour}");
         Console.WriteLine($"The number of palindromes is {countNumberOfPalindromes}");
         Console.WriteLine($"The number of descending serieses in numbers is {countNumberOfDescendingNumbers}");
-        Console.WriteLine($"The numbers in decimal form are: {firstNumberInIteration}, {secondNumberInIteration}, {thirdNumberInIteration}");
+    }
+
+    public static void sortAndPrintThreeDecimalsHighestToLowest(int number1, int number2, int number3)
+    {
+        int highest, lowest, middle;
+
+        highest = Math.Max(Math.Max(number1, number2), number3);
+        lowest = Math.Min(Math.Min(number1, number2), number3);
+        middle = number1 + number2 + number3 - highest - lowest;
+
+        Console.WriteLine($"The numbers in decimal form (from highest to lowest are: {highest}, {middle}, {lowest}");
     }
 
     public static bool isValid(string readNumberFromUser)
     {
-        for(int i = 0; i < 8; i++)
+        for (int i = 0; i < 8; i++)
         {
             if (readNumberFromUser[i] != 1 || readNumberFromUser[i] != 0)
             {
                 return false;
             }
         }
+
         return true;
     }
 
-    public static short ConvertToDecimal(string binaryString)
+    public static int ConvertToDecimal(string binaryString)
     {
-        short convertedNumber = 0;
+        int convertedNumber = 0;
+        
         for (int i = 0; i <= 7; i++)
         {
-            short power = (short)(binaryString[i] - '0');
+            int power = binaryString[i] - '0';
             if (power != 0)
             {
-                convertedNumber += (short)Math.Pow(2, power * (7 - i));
+                convertedNumber += (int)Math.Pow(2, power * (7 - i));
             }
         }
+
         return convertedNumber;
     }
 
     public static float CountNumberOfOnesInString(string number)
     {
         float count = 0;
-        for (int i=0; i<number.Length; i++)
+
+        for (int i = 0; i < number.Length; i++)
         {
             if (number[i] == '1')
                 count++;
         }
+
         return count; 
     }
 

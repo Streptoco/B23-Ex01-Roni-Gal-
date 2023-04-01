@@ -33,13 +33,14 @@ public class Program
 
     public static void printDiamondRecursive(int numberOfStars, int height)
     {
-        if(height < numberOfStars)
+        if (height < numberOfStars)
         {
             return;
         }
         printRow(numberOfStars, (height - numberOfStars)/2, height);
         printDiamondRecursive(numberOfStars + 2, height);
-        if(height == numberOfStars)
+        
+        if (height == numberOfStars)
         {
             return;
         }
