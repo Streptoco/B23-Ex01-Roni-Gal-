@@ -22,17 +22,14 @@
             Console.WriteLine("Please enter a string containing 6 chars");
             string inputFromUser = Console.ReadLine();
 
-            // Check if the string is valid
-            if (!invalidInputChecker(inputFromUser))
+            while (!invalidInputChecker(inputFromUser))
             {
                 Console.WriteLine("Invalid input!");
-                return;
+                inputFromUser = Console.ReadLine();
             }
 
-            // Check if it's a palindrome
             Console.WriteLine(isPalindrome(inputFromUser) ? "The string is a palindrome." : "The string isn't a palindrome.");
 
-            // Check if the number divides by 3
             eChoice doesTheNumberDivideByThree = doesItDivideByThree(inputFromUser);
             if (doesTheNumberDivideByThree == eChoice.NotANumber)
             {
@@ -47,7 +44,6 @@
                 Console.WriteLine("The string is a number, and it is divided by three.");
             }
 
-            // Check how many uppercase letters are there
             int countUpperCaseLetters = countUppercaseLettersInString(inputFromUser);
             Console.WriteLine($"The number of uppercase letters in the string is {countUpperCaseLetters}");
         }

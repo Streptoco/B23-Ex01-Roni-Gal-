@@ -29,18 +29,21 @@
         public static bool isInputValid(string i_InputFromUser)
         {
             bool returnedBoolFromFunction = true;
-           
-            for (int i = 0; i < i_InputFromUser.Length; i++)
-            {
-                if (i_InputFromUser[i] < '0' || i_InputFromUser[i] > '9')
-                {
-                    returnedBoolFromFunction = false;
-                }
-            }
-
+            
             if (i_InputFromUser.Length != 6)
             {
                 returnedBoolFromFunction = false;
+            }
+
+            else
+            {
+                for (int i = 0; i < i_InputFromUser.Length; i++)
+                {
+                    if (i_InputFromUser[i] < '0' || i_InputFromUser[i] > '9')
+                    {
+                        returnedBoolFromFunction = false;
+                    }
+                }
             }
 
             return returnedBoolFromFunction;

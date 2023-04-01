@@ -94,17 +94,19 @@
         {
             bool returnBoolFromFunction = true;
 
-            for (int i = 0; i < k_ByteSize; i++)
-            {
-                if (i_ReadNumberFromUser[i] != '1' && i_ReadNumberFromUser[i] != '0')
-                {
-                    returnBoolFromFunction = false;
-                }
-            }
-
             if (i_ReadNumberFromUser.Length != k_ByteSize)
             {
                 returnBoolFromFunction = false;
+            }
+            else
+            {
+                for (int i = 0; i < k_ByteSize; i++)
+                {
+                    if (i_ReadNumberFromUser[i] != '1' && i_ReadNumberFromUser[i] != '0')
+                    {
+                        returnBoolFromFunction = false;
+                    }
+                }
             }
 
             return returnBoolFromFunction;

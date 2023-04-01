@@ -12,9 +12,16 @@
         public static void PrintMenuAndInteract()
         {
             int heightInputFromUser;
+            string readInputFromUser;
 
             Console.WriteLine("Please enter the desired height of the diamond.");
-            int.TryParse(Console.ReadLine(), out heightInputFromUser);
+            readInputFromUser = Console.ReadLine();
+
+            while(!int.TryParse(readInputFromUser, out heightInputFromUser))
+            {
+                Console.WriteLine("Please enter a VALID input!");
+                readInputFromUser = Console.ReadLine();
+            }
 
             if (heightInputFromUser == 0)
             {
